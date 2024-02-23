@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/service1/service1/pom.xml" />
+        <option value="$PROJECT_DIR$/service2/service2/pom.xml" />
+        <option value="$PROJECT_DIR$/auth-service/auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/gate-service/gate-service/pom.xml" />
+        <option value="$PROJECT_DIR$/discoveryserver/discoveryserver/pom.xml" />
+        <option value="$PROJECT_DIR$/Spring-Sercurity/pom.xml" />
+        <option value="$PROJECT_DIR$/springproject/springproject/pom.xml" />
+        <option value="$PROJECT_DIR$/springproject/pom.xml" />
+      </list>
+    </option>
+    <option name="workspaceImportForciblyTurnedOn" value="true" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_20" default="true" project-jdk-name="corretto-20 (2)" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
