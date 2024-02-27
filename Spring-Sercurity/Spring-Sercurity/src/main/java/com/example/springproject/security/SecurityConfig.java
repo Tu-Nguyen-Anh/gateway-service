@@ -64,6 +64,8 @@ public class SecurityConfig {
                           .requestMatchers("/api/v1/users/get/{id}").hasAuthority(Permission.VIEW_USER_DETAILS.name())
                           .requestMatchers("/api/v1/users/update/{id}").hasAuthority(Permission.UPDATE_USER.name())
                           .requestMatchers("/api/v1/users/all").hasAuthority(Permission.VIEW_ALL_USERS.name())
+                          .requestMatchers("/service1").hasAnyAuthority(Permission.VIEW_SERVICE1.name())
+
               )
               .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
               .build();

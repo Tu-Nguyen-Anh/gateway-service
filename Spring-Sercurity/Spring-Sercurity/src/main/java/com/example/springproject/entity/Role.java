@@ -17,29 +17,30 @@ import static com.example.springproject.entity.Permission.*;
  */
 @RequiredArgsConstructor
 public enum Role {
-    USER(Set.of(
-          VIEW_USER_DETAILS
-    )),
-    ADMIN(Set.of(
-          VIEW_ALL_USERS,
-          CREATE_USER,
-          UPDATE_USER,
-          VIEW_USER_DETAILS
-    )),
+  USER(Set.of(
+        VIEW_USER_DETAILS
+  )),
+  ADMIN(Set.of(
+        VIEW_ALL_USERS,
+        CREATE_USER,
+        UPDATE_USER,
+        VIEW_USER_DETAILS
+        , VIEW_SERVICE1
+  )),
 
 
-    ;
+  ;
 
-    @Getter
-    private final Set<Permission> permissionSet;
+  @Getter
+  private final Set<Permission> permissionSet;
 
 
-    public List<SimpleGrantedAuthority> getAuthorities(){
-        var authorities = new java.util.ArrayList<>(getPermissionSet()
-              .stream()
-              .map(permission -> new SimpleGrantedAuthority(permission.name()))
-              .toList());
-        authorities.add(new SimpleGrantedAuthority(CommonConstants.AUTHORIZATION_PREFIX + this.name()));
-        return authorities;
-    }
+  public List<SimpleGrantedAuthority> getAuthorities() {
+    var authorities = new java.util.ArrayList<>(getPermissionSet()
+          .stream()
+          .map(permission -> new SimpleGrantedAuthority(permission.name()))
+          .toList());
+    authorities.add(new SimpleGrantedAuthority(CommonConstants.AUTHORIZATION_PREFIX + this.name()));
+    return authorities;
+  }
 }

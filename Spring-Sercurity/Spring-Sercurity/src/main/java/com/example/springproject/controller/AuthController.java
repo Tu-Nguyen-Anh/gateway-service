@@ -9,19 +9,20 @@ import com.example.springproject.service.base.MessageService;
 import com.example.springproject.service.base.MessageServiceImpl;
 import com.example.springproject.service.impl.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static com.example.springproject.constant.CommonConstants.DEFAULT_LANGUAGE;
 import static com.example.springproject.constant.CommonConstants.LANGUAGE;
-import static com.example.springproject.constant.MessageCodeConstant.LOGIN_CODE;
-import static com.example.springproject.constant.MessageCodeConstant.REGISTER_CODE;
+import static com.example.springproject.constant.MessageCodeConstant.*;
 
 /**
  * Controller class handling authentication-related endpoints.
  * This class provides endpoints for user registration and login.
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -58,7 +59,19 @@ public class AuthController {
                                                          @RequestHeader(name = LANGUAGE, defaultValue = DEFAULT_LANGUAGE) String language){
         return ResponseGeneral.ofSuccess(messageService.getMessage(LOGIN_CODE, language), authenticationService.logIn(authenticationRequest));
     }
+    @GetMapping("/validate")
+    public ResponseGeneral<Void> validateToken(
+          @RequestParam String token,
+          @RequestHeader(name = LANGUAGE, defaultValue = DEFAULT_LANGUAGE) String language
+    ) {
+        log.info("(validateToken) token:{}", token);
 
+        authenticationService.validateToken(token);
+
+        return ResponseGeneral.ofSuccess(
+              messageService.getMessage(SUCCESS, language)
+        );
+    }
 
 
 }

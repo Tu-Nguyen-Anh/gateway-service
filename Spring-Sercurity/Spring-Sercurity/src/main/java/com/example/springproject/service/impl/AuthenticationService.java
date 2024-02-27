@@ -11,20 +11,24 @@ import com.example.springproject.repository.UserRepository;
 import com.example.springproject.security.CustomUserDetail;
 import com.example.springproject.utils.DateUtils;
 import com.example.springproject.utils.MapperUtils;
-import com.sun.jdi.request.DuplicateRequestException;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import static com.example.springproject.constant.ExceptionCode.DUPLICATE_CODE;
 import static com.example.springproject.constant.ExceptionCode.DUPLICATE_USERNAME_CODE;
 
 /**
@@ -43,6 +47,8 @@ public class AuthenticationService {
   private final JwtService jwtService;
 
   private final AuthenticationManager authenticationManager;
+  @Autowired
+  private UserDetailsService userDetailsService;
 
   /**
    * Registers a new user with the provided information.
@@ -85,6 +91,57 @@ public class AuthenticationService {
           .id(customUserDetail.getUser().getId())
           .token(jwtService.generateToken(customUserDetail))
           .build();
+  }
+
+  /**
+   *
+   * @param token
+   */
+
+  public void validateToken(String token) {
+    log.info("(validateToken) token:{}", token);
+
+    final String username = jwtService.extractUsername(token);
+    List<GrantedAuthority> grantedAuthority = getAuthorities(jwtService.getPermissionFromToken(token));
+
+    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+      UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+      if (jwtService.isTokenValid(token, userDetails)) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+              userDetails,
+              null,
+              grantedAuthority
+        );
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+      }
+    }
+
+  }
+//  public void validateToken(String token) {
+//    log.info("(validateToken) token:{}", token);
+//
+//    final String username = jwtService.extractUsername(token);
+//
+//    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+//      UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+//      if (jwtService.isTokenValid(token, userDetails)) {
+//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+//              userDetails,
+//              null,
+//              userDetails.getAuthorities()
+//        );
+//        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+//      }
+//    }
+//
+//  }
+  private List<GrantedAuthority> getAuthorities(List<String> permission) {
+//    log.debug("(getAuthorities) role: {}", role);
+  List<GrantedAuthority> authorities = new ArrayList<>();
+  for(String s : permission){
+    authorities.add(new SimpleGrantedAuthority(s));
+  }
+    return authorities;
   }
 
   /**
