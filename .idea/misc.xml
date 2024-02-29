@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/springproject/springproject/pom.xml" />
         <option value="$PROJECT_DIR$/springproject/pom.xml" />
         <option value="$PROJECT_DIR$/Spring-Sercurity/Spring-Sercurity/pom.xml" />
+        <option value="$PROJECT_DIR$/base-crud-spring-boot/pom.xml" />
       </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />

@@ -128,7 +128,6 @@ public class JwtService {
   }
 
   public List<String> getPermissionFromToken(String token) {
-
     log.debug("(getRoleFromToken) start");
     return getClaimsMap(token);
   }

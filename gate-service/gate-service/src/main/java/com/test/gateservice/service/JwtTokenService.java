@@ -30,7 +30,6 @@ public class JwtTokenService {
           token,
           language
     );
-
     return response.getBody();
   }
 

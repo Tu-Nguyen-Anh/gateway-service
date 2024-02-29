@@ -94,30 +94,28 @@ public class AuthenticationService {
   }
 
   /**
-   *
    * @param token
    */
 
   public void validateToken(String token) {
     log.info("(validateToken) token:{}", token);
-
     final String username = jwtService.extractUsername(token);
+
     List<GrantedAuthority> grantedAuthority = getAuthorities(jwtService.getPermissionFromToken(token));
+    log.info("grantedAuthority {}", grantedAuthority);
 
-    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-      if (jwtService.isTokenValid(token, userDetails)) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-              userDetails,
-              null,
-              grantedAuthority
-        );
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-      }
-    }
-
+    UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+          userDetails,
+          null,
+          grantedAuthority
+    );
+    log.info("authenticationToken: {}", authenticationToken);
+    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
   }
-//  public void validateToken(String token) {
+
+
+  //  public void validateToken(String token) {
 //    log.info("(validateToken) token:{}", token);
 //
 //    final String username = jwtService.extractUsername(token);
@@ -137,10 +135,10 @@ public class AuthenticationService {
 //  }
   private List<GrantedAuthority> getAuthorities(List<String> permission) {
 //    log.debug("(getAuthorities) role: {}", role);
-  List<GrantedAuthority> authorities = new ArrayList<>();
-  for(String s : permission){
-    authorities.add(new SimpleGrantedAuthority(s));
-  }
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    for (String s : permission) {
+      authorities.add(new SimpleGrantedAuthority(s));
+    }
     return authorities;
   }
 

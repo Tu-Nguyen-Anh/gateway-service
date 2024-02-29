@@ -17,11 +17,9 @@ public enum Permission {
     CREATE_USER("/api/v1/users/create"),
     UPDATE_USER("/api/v1/users/update/{id}"),
     VIEW_USER_DETAILS("/api/v1/users/get/{id}"),
-    VIEW_SERVICE1("service1")
+    VIEW_SERVICE1("/service1")
     ;
 
     @Getter
     private final String endPoints;
-
-
 }

@@ -10,13 +10,13 @@
         <module name="service2" />
         <module name="springproject" />
         <module name="service1" />
+        <module name="product-project" />
         <module name="discoveryserver" />
         <module name="gate-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="auth-service" target="17" />
-      <module name="spring-project" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -24,9 +24,9 @@
       <module name="auth-service" options="-parameters" />
       <module name="discoveryserver" options="-parameters" />
       <module name="gate-service" options="-parameters" />
+      <module name="product-project" options="-parameters" />
       <module name="service1" options="-parameters" />
       <module name="service2" options="-parameters" />
-      <module name="spring-project" options="-parameters" />
       <module name="springproject" options="-parameters" />
     </option>
   </component>
